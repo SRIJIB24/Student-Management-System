@@ -3,13 +3,24 @@ import { StudentCard } from "./StudentCard";
 
 const StudentCardContainer = () => {
   const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     fetch("https://student-management-system-tdtf.onrender.com/student/get")
       .then((res) => res.json())
-      .then((resData) => setStudents(resData.data))
-      .catch((err) => console.error(err));
+      .then((resData) => {
+        setStudents(resData.data)
+        setLoading(false);
+      })
+      .catch((err) =>{
+        console.error(err)
+        setLoading(false);
+      });
   }, []);
+
+  if (loading) {
+    return <p>Loading students...</p>;
+  }
 
   return (
     <div className="flex flex-wrap justify-center gap-8 w-full">
