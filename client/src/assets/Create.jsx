@@ -32,7 +32,8 @@ const Create = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage(null);
-    const url = "http://localhost:3000/student/add";
+    const url =
+      "https://student-management-system-tdtf.onrender.com/student/add";
     const form = new FormData();
     form.append("Name", formData.Name);
     form.append("Email", formData.Email);

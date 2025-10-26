@@ -16,29 +16,31 @@ const Update = () => {
   const [preview, setPreview] = useState(null);
 
   useEffect(() => {
-  fetch(`http://localhost:3000/student/get`)
-    .then((res) => res.json())
-    .then((data) => {
-      const student = data.data.find((item) => item._id === id);
-      if (student) {
-        // ✅ convert date from ISO → YYYY-MM-DD
-        const formattedDate = student.date
-          ? new Date(student.date).toISOString().split("T")[0]
-          : "";
+    fetch(`https://student-management-system-tdtf.onrender.com/student/get`)
+      .then((res) => res.json())
+      .then((data) => {
+        const student = data.data.find((item) => item._id === id);
+        if (student) {
+          // ✅ convert date from ISO → YYYY-MM-DD
+          const formattedDate = student.date
+            ? new Date(student.date).toISOString().split("T")[0]
+            : "";
 
-        setFormData({
-          Name: student.Name,
-          Email: student.Email,
-          Phone: student.Phone,
-          date: formattedDate, // ✅ use formatted date
-          Class: student.Class,
-          Photo: null, // photo not fetched as File
-        });
+          setFormData({
+            Name: student.Name,
+            Email: student.Email,
+            Phone: student.Phone,
+            date: formattedDate, // ✅ use formatted date
+            Class: student.Class,
+            Photo: null, // photo not fetched as File
+          });
 
-        setPreview(`http://localhost:3000/uploads/${student.Photo}`);
-      }
-    })
-    .catch((err) => console.error(err));
+          setPreview(
+            `https://student-management-system-tdtf.onrender.com/uploads/${student.Photo}`
+          );
+        }
+      })
+      .catch((err) => console.error(err));
   }, [id]);
 
   const handleChange = (e) => {
@@ -59,22 +61,24 @@ const Update = () => {
     form.append("Phone", formData.Phone);
     form.append("date", formData.date);
     form.append("Class", formData.Class);
-    if (formData.Photo) form.append("Photo", formData.Photo)
-    try{
-    const res = await fetch(`http://localhost:3000/student/update/${id}`, {
-      method: "POST",
-      body: form,
-    });
-    
-    const data = await res.json();
-    if (data.success) {
-      alert("✅ Student updated successfully!");
-      navigate("/");
-    } else {
-      alert("❌ Failed to update student.");
-    }
-    }
-    catch (error) {
+    if (formData.Photo) form.append("Photo", formData.Photo);
+    try {
+      const res = await fetch(
+        `https://student-management-system-tdtf.onrender.com/student/update/${id}`,
+        {
+          method: "POST",
+          body: form,
+        }
+      );
+
+      const data = await res.json();
+      if (data.success) {
+        alert("✅ Student updated successfully!");
+        navigate("/");
+      } else {
+        alert("❌ Failed to update student.");
+      }
+    } catch (error) {
       console.error("Error updating student:", error);
       alert("Server error during update.");
     }

@@ -1,11 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export const StudentCard = ({ id, Name, Email, Phone, date_of_Birth, Class, Photo }) => {
+export const StudentCard = ({
+  id,
+  Name,
+  Email,
+  Phone,
+  date_of_Birth,
+  Class,
+  Photo,
+}) => {
   const handleDelete = async () => {
     if (window.confirm(`Are you sure you want to delete ${Name}?`)) {
       try {
-        const res = await fetch(`http://localhost:3000/student/delete/${id}`, { method: "DELETE" });
+        const res = await fetch(
+          `https://student-management-system-tdtf.onrender.com/student/delete/${id}`,
+          { method: "DELETE" }
+        );
         const data = await res.json();
         if (data.success) {
           alert("✅ Student deleted successfully!");
@@ -23,18 +34,21 @@ export const StudentCard = ({ id, Name, Email, Phone, date_of_Birth, Class, Phot
   return (
     <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-transform transform hover:-translate-y-2 duration-300 p-6 w-full max-w-sm text-center">
       <img
-        src={`http://localhost:3000/uploads/${Photo}`}
+        src={`https://student-management-system-tdtf.onrender.com/uploads/${Photo}`}
         alt={Name}
         className="w-24 h-24 mx-auto rounded-full object-cover border-4 border-green-600"
       />
       <h1 className="text-xl font-bold text-gray-800 mt-4">{Name}</h1>
       <p className="text-gray-600">{Email}</p>
       <p className="text-gray-600">{Phone}</p>
-      <p>Date of Birth: {new Date(date_of_Birth).toLocaleDateString('en-GB', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric'
-        })}</p>
+      <p>
+        Date of Birth:{" "}
+        {new Date(date_of_Birth).toLocaleDateString("en-GB", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        })}
+      </p>
       <h2 className="text-lg font-semibold text-green-800 my-2">{Class}</h2>
 
       <div className="flex justify-center gap-3 mt-4 flex-wrap">

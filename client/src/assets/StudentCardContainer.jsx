@@ -5,7 +5,7 @@ const StudentCardContainer = () => {
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/student/get")
+    fetch("https://student-management-system-tdtf.onrender.com/student/get")
       .then((res) => res.json())
       .then((resData) => setStudents(resData.data))
       .catch((err) => console.error(err));
@@ -27,7 +27,9 @@ const StudentCardContainer = () => {
           />
         ))
       ) : (
-        <p className="text-gray-500 mt-8 text-center text-lg">No students found.</p>
+        <p className="text-gray-500 mt-8 text-center text-lg">
+          No students found.
+        </p>
       )}
     </div>
   );
