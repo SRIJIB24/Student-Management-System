@@ -30,7 +30,11 @@ const View = () => {
             <p className="text-gray-600">📧 {student.Email}</p>
             <p className="text-gray-600">📞 {student.Phone}</p>
             <p className="text-gray-600">🎓 {student.Class}</p>
-            <p className="text-gray-600">🎂 {student.date}</p>
+            <p>Date of Birth: {new Date(student.date).toLocaleDateString('en-GB', {
+               day: '2-digit',
+               month: 'short',
+               year: 'numeric'
+              })}</p>
             <button
               onClick={() => navigate("/")}
               className="mt-4 bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700 transition"

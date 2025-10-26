@@ -16,23 +16,29 @@ const Update = () => {
   const [preview, setPreview] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/student/get`)
-      .then((res) => res.json())
-      .then((data) => {
-        const student = data.data.find((item) => item._id === id);
-        if (student){
-          setFormData({
-            Name: student.Name,
-            Email: student.Email,
-            Phone: student.Phone,
-            date: student.date,
-            Class: student.Class,
-            Photo: null, // photo not fetched as File
-          });
-          setPreview(`http://localhost:3000/uploads/${student.Photo}`);
-        }
-      })
-      .catch((err) => console.error(err));
+  fetch(`http://localhost:3000/student/get`)
+    .then((res) => res.json())
+    .then((data) => {
+      const student = data.data.find((item) => item._id === id);
+      if (student) {
+        // ✅ convert date from ISO → YYYY-MM-DD
+        const formattedDate = student.date
+          ? new Date(student.date).toISOString().split("T")[0]
+          : "";
+
+        setFormData({
+          Name: student.Name,
+          Email: student.Email,
+          Phone: student.Phone,
+          date: formattedDate, // ✅ use formatted date
+          Class: student.Class,
+          Photo: null, // photo not fetched as File
+        });
+
+        setPreview(`http://localhost:3000/uploads/${student.Photo}`);
+      }
+    })
+    .catch((err) => console.error(err));
   }, [id]);
 
   const handleChange = (e) => {

@@ -30,7 +30,11 @@ export const StudentCard = ({ id, Name, Email, Phone, date_of_Birth, Class, Phot
       <h1 className="text-xl font-bold text-gray-800 mt-4">{Name}</h1>
       <p className="text-gray-600">{Email}</p>
       <p className="text-gray-600">{Phone}</p>
-      <p className="text-gray-500 text-sm">DOB: {date_of_Birth}</p>
+      <p>Date of Birth: {new Date(date_of_Birth).toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+        })}</p>
       <h2 className="text-lg font-semibold text-green-800 my-2">{Class}</h2>
 
       <div className="flex justify-center gap-3 mt-4 flex-wrap">
